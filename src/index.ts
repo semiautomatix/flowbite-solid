@@ -8,7 +8,7 @@
 export * from "./components/Button";
 // export * from './components/Card';
 // export * from './components/Carousel';
-// export * from './components/Checkbox';
+export * from "./components/Checkbox";
 // export * from './components/DarkThemeToggle';
 // export * from './components/Datepicker';
 // export * from './components/Dropdown';
