@@ -20,7 +20,8 @@ export interface CheckboxProps extends Omit<ComponentProps<'input'>, 'type' | 'r
 
 export const Checkbox: Component<CheckboxProps> = (props) => {
   const mergedProps = mergeProps({ color: 'default', theme: {} }, props);
-  const { class: className, color, theme: customTheme, ...restProps } = mergedProps;
+  const [local, restProps] = splitProps(mergedProps, ["theme"]);
+  const theme = mergeDeep(getTheme().checkbox, local.theme);
   const theme = mergeDeep(getTheme().checkbox, customTheme);
   return (
     <input
