@@ -20,7 +20,7 @@ export interface TooltipProps extends Omit<ComponentProps<'div'>, 'content' | 's
 /**
  * @see https://floating-ui.com/docs/react-dom-interactions
  */
-export const Tooltip: Component<TooltipProps> = (p: TooltipProps) => {
+export const Tooltip: Component<TooltipProps> = (props) => {
   const mergedProps = mergeProps({
     animation: 'duration-300',
     arrow: true,
@@ -43,7 +43,7 @@ export const Tooltip: Component<TooltipProps> = (p: TooltipProps) => {
       theme={theme}
       trigger={trigger}
       class={className}
-      {...p}
+      {...props}
     >
       {children}
     </Floating>
