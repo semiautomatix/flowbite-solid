@@ -71,4 +71,4 @@ export const Badge: FC<BadgeProps> = ({
   );
 };
 
-Badge.displayName = 'Badge';
+
