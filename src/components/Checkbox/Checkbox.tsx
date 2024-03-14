@@ -18,8 +18,8 @@ export interface CheckboxProps extends Omit<ComponentProps<'input'>, 'type' | 'r
   color?: keyof FlowbiteColors;
 }
 
-export const Checkbox: Component<CheckboxProps> = (props) => {
-  const mergedProps = mergeProps({ color: 'default', theme: {} }, props);
+export const Checkbox: Component<CheckboxProps> = (p: CheckboxProps) => {
+  const mergedProps = mergeProps({ color: 'default', theme: {} }, p);
   const [local, restProps] = splitProps(mergedProps, ["theme"]);
   const theme = mergeDeep(getTheme().checkbox, local.theme);
   const theme = mergeDeep(getTheme().checkbox, customTheme);
