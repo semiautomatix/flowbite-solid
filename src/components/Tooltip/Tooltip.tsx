@@ -45,7 +45,7 @@ export const Tooltip: Component<TooltipProps> = (p: TooltipProps) => {
       class={className}
       {...props}
     >
-      {children}
+      {local.children}
     </Floating>
   );
 };
