@@ -39,9 +39,9 @@ export const Tooltip: Component<TooltipProps> = (p: TooltipProps) => {
       arrow={arrow}
       content={content}
       placement={placement}
-      style={style}
+      style={local.style}
       theme={theme}
-      trigger={trigger}
+      trigger={local.trigger}
       class={className}
       {...props}
     >
