@@ -1,9 +1,9 @@
-import { mergeProps, Component } from 'solid-js';
-import { twMerge } from 'tailwind-merge';
-import { mergeDeep } from '../../helpers/merge-deep';
-import { getTheme } from '../../theme-store';
-import type { DeepPartial } from '../../types';
-import type { FlowbiteColors } from '../Flowbite';
+import { Component, ComponentProps, mergeProps, splitProps } from "solid-js";
+import { twMerge } from "tailwind-merge";
+import { mergeDeep } from "../../helpers/merge-deep";
+import { getTheme } from "../../theme-store";
+import type { DeepPartial } from "../../types";
+import type { FlowbiteColors } from "../Flowbite";
 
 export interface FlowbiteCheckboxTheme {
   root: FlowbiteCheckboxRootTheme;
@@ -13,20 +13,29 @@ export interface FlowbiteCheckboxRootTheme {
   color: FlowbiteColors;
 }
 
-export interface CheckboxProps extends Omit<ComponentProps<'input'>, 'type' | 'ref' | 'color'> {
+export interface CheckboxProps
+  extends Omit<ComponentProps<"input">, "type" | "ref" | "color"> {
   theme?: DeepPartial<FlowbiteCheckboxTheme>;
   color?: keyof FlowbiteColors;
+  class?: string;
 }
 
-export const Checkbox: Component<CheckboxProps> = (p: CheckboxProps) => {
-  const mergedProps = mergeProps({ color: 'default', theme: {} }, p);
-  const [local, props] = splitProps(mergedProps, ["theme"]);
+export const Checkbox: Component<CheckboxProps> = (props) => {
+  const merged = mergeProps({ color: "default", theme: {} }, props);
+  const [local, others] = splitProps(merged, ["class", "color", "theme"]);
   const theme = mergeDeep(getTheme().checkbox, local.theme);
+
   return (
     <input
       type="checkbox"
-      class={twMerge(theme.root.base, theme.root.color[color], className)}
-      {...props}
+      class={twMerge(
+        theme.root.base,
+        theme.root.color[local.color],
+        local.class
+      )}
+      {...others}
     />
   );
 };
+
+// Checkbox.displayName = 'Checkbox';

@@ -8,7 +8,7 @@ import type { FlowbiteAlertTheme } from "../Alert";
 import type { FlowbiteButtonGroupTheme, FlowbiteButtonTheme } from "../Button";
 import type { FlowbiteCardTheme } from "../Card";
 // import type { FlowbiteCarouselTheme } from '../Carousel';
-// import type { FlowbiteCheckboxTheme } from '../Checkbox';
+import type { FlowbiteCheckboxTheme } from "../Checkbox";
 // import type { FlowbiteDarkThemeToggleTheme } from '../DarkThemeToggle';
 // import type { FlowbiteDatepickerTheme } from '../Datepicker';
 // import type { FlowbiteDropdownTheme } from '../Dropdown';
@@ -68,7 +68,7 @@ export interface FlowbiteTheme {
   // toast: FlowbiteToastTheme;
   // tooltip: FlowbiteTooltipTheme;
   // dropdown: FlowbiteDropdownTheme;
-  // checkbox: FlowbiteCheckboxTheme;
+  checkbox: FlowbiteCheckboxTheme;
   // fileInput: FlowbiteFileInputTheme;
   // floatingLabel: FlowbiteFloatingLabelTheme;
   label: FlowbiteLabelTheme;
