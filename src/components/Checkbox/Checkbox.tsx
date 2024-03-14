@@ -26,7 +26,7 @@ export const Checkbox: Component<CheckboxProps> = (p: CheckboxProps) => {
     <input
       type="checkbox"
       class={twMerge(theme.root.base, theme.root.color[color], className)}
-      {...restProps}
+      {...props}
     />
   );
 };
