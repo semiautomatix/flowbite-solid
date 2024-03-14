@@ -29,7 +29,7 @@ export const Tooltip: Component<TooltipProps> = (p: TooltipProps) => {
     theme: {},
     trigger: 'hover'
   }, p);
-  const [local, props] = splitProps(mergedProps, ['animation', 'arrow', 'children', 'className', 'content', 'placement', 'style', 'theme', 'trigger']);
+  const [local, props] = splitProps(mergedProps, ['style', 'trigger', 'children', 'theme']);
   const theme = mergeDeep(getTheme().tooltip, mergedProps.theme);
 
 
