@@ -1,5 +1,5 @@
 import type { Placement } from '@floating-ui/core';
-import type { ComponentProps, FC, ReactNode } from 'react';
+import { Component, splitProps, mergeProps } from 'solid-js';
 import { mergeDeep } from '../../helpers/merge-deep';
 import { getTheme } from '../../theme-store';
 import type { DeepPartial } from '../../types';
@@ -31,7 +31,7 @@ export const Tooltip: Component<TooltipProps> = (props) => {
     trigger: 'hover'
   }, local);
   const theme = mergeDeep(getTheme().tooltip, mergedProps.theme);
-  const theme = mergeDeep(getTheme().tooltip, customTheme);
+
 
   return (
     <Floating
@@ -42,7 +42,7 @@ export const Tooltip: Component<TooltipProps> = (props) => {
       style={style}
       theme={theme}
       trigger={trigger}
-      className={className}
+      class={className}
       {...props}
     >
       {children}
