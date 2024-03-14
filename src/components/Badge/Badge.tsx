@@ -62,12 +62,10 @@ export const Badge: FC<BadgeProps> = ({
     </span>
   );
 
-  return href ? (
-    <a className={theme.root.href} href={href}>
-      <Content />
-    </a>
-  ) : (
-    <Content />
+  return (
+    <Show when={local.href} fallback={<Content />}>{() => (
+      <a class={theme.root.href} href={local.href}><Content /></a>
+    )}</Show>
   );
 };
 
