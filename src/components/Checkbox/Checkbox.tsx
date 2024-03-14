@@ -33,4 +33,4 @@ export const Checkbox: Component<CheckboxProps> = (props) => {
   );
 };
 
-Checkbox.displayName = 'Checkbox';
+// Checkbox.displayName = 'Checkbox';

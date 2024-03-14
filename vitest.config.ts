@@ -1,9 +1,12 @@
-import { defineConfig } from "vite";
-import solidPlugin from "vite-plugin-solid";
 import path from "path";
+import solid from "vite-plugin-solid";
+import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-  plugins: [solidPlugin()],
+  plugins: [solid()],
+  resolve: {
+    conditions: ["development", "browser"],
+  },
   build: {
     lib: {
       entry: path.resolve(__dirname, "/src/index.ts"),
@@ -20,6 +23,22 @@ export default defineConfig({
           ["flowbite"]: "flowbite",
           ["solid-heroicons"]: "solid-heroicons",
           ["tailwind-merge"]: "tailwindMerge",
+        },
+      },
+    },
+  },
+  test: {
+    environment: "jsdom",
+    pool: "forks",
+    poolOptions: {
+      forks: {
+        isolate: false,
+      },
+    },
+    deps: {
+      optimizer: {
+        web: {
+          exclude: ["solid-js"],
         },
       },
     },
