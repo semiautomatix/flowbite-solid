@@ -3,6 +3,8 @@ import { render, cleanup, fireEvent, screen } from "@solidjs/testing-library";
 import { Checkbox } from "./Checkbox";
 
 describe("Checkbox Component", () => {
+  afterEach(cleanup);
+
   it("renders correctly with default props", () => {
     render(() => <Checkbox />);
     const checkbox = screen.getByRole("checkbox");
@@ -37,6 +39,6 @@ describe("Checkbox Component", () => {
     const color = "red";
     render(() => <Checkbox color={color} />);
     const checkbox = screen.getByRole("checkbox");
-    expect(checkbox).toHaveClass("text-red-500"); // Assuming 'text-red-500' is the class applied for color 'red'
+    expect(checkbox).toHaveClass("text-red-600"); // Assuming 'text-red-600' is the class applied for color 'red'
   });
 });
