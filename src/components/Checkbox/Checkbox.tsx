@@ -22,7 +22,6 @@ export const Checkbox: Component<CheckboxProps> = (p: CheckboxProps) => {
   const mergedProps = mergeProps({ color: 'default', theme: {} }, p);
   const [local, props] = splitProps(mergedProps, ["theme"]);
   const theme = mergeDeep(getTheme().checkbox, local.theme);
-  const theme = mergeDeep(getTheme().checkbox, customTheme);
   return (
     <input
       type="checkbox"
