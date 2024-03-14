@@ -1,5 +1,6 @@
 import type { Placement } from '@floating-ui/core';
-import type { ComponentProps, FC, ReactNode } from 'react';
+import { Component, createSignal, createEffect } from 'solid-js';
+import { For, Show } from 'solid-js/web';
 import { mergeDeep } from '../../helpers/merge-deep';
 import { getTheme } from '../../theme-store';
 import type { DeepPartial } from '../../types';
@@ -20,19 +21,13 @@ export interface TooltipProps extends Omit<ComponentProps<'div'>, 'content' | 's
 /**
  * @see https://floating-ui.com/docs/react-dom-interactions
  */
-export const Tooltip: FC<TooltipProps> = ({
-  animation = 'duration-300',
-  arrow = true,
-  children,
-  className,
-  content,
-  placement = 'top',
-  style = 'dark',
-  theme: customTheme = {},
-  trigger = 'hover',
-  ...props
-}) => {
-  const theme = mergeDeep(getTheme().tooltip, customTheme);
+export const Tooltip: Component<TooltipProps> = (props) => {
+  const [getProps, setProps] = createSignal(props);
+  createEffect(() => {
+    setProps(props);
+  });
+  const { children, animation = 'duration-300', arrow = true, className, content, placement = 'top', style = 'dark', theme: customTheme = {}, trigger = 'hover' } = props;
+  const theme = createEffect(() => mergeDeep(getTheme().tooltip, getProps().theme));
 
   return (
     <Floating
@@ -43,7 +38,7 @@ export const Tooltip: FC<TooltipProps> = ({
       style={style}
       theme={theme}
       trigger={trigger}
-      className={className}
+      classList={{ [className]: true }}
       {...props}
     >
       {children}
