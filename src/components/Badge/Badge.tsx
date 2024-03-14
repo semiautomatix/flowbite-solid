@@ -39,25 +39,27 @@ export const Badge: FC<BadgeProps> = ({
   href,
   icon: Icon,
   size = 'xs',
-  className,
+  class,
   theme: customTheme = {},
   ...props
 }) => {
-  const theme = mergeDeep(getTheme().badge, customTheme);
+  const merged = mergeProps({ color: 'info', size: 'xs', theme: {} }, props);
+  const [local, others] = splitProps(merged, ['class', 'color', 'size', 'theme']);
+  const theme = mergeDeep(getTheme().badge, local.theme);
 
   const Content: FC = () => (
     <span
-      className={twMerge(
+      class={twMerge(
         theme.root.base,
-        theme.root.color[color],
-        theme.root.size[size],
+        theme.root.color[local.color],
+        theme.root.size[local.size],
         theme.icon[Icon ? 'on' : 'off'],
-        className,
+        local.class
       )}
       data-testid="flowbite-badge"
-      {...props}
+      {...others}
     >
-      {Icon && <Icon aria-hidden className={theme.icon.size[size]} data-testid="flowbite-badge-icon" />}
+      {Icon && <Icon aria-hidden class={theme.icon.size[local.size]} data-testid="flowbite-badge-icon" />}
       {children && <span>{children}</span>}
     </span>
   );
