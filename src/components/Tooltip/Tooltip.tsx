@@ -21,6 +21,7 @@ export interface TooltipProps extends Omit<ComponentProps<'div'>, 'content' | 's
  * @see https://floating-ui.com/docs/react-dom-interactions
  */
 export const Tooltip: Component<TooltipProps> = (props) => {
+  const [local, others] = splitProps(p, ['animation', 'arrow', 'children', 'className', 'content', 'placement', 'style', 'theme', 'trigger']);
   const mergedProps = mergeProps({
     animation: 'duration-300',
     arrow: true,
@@ -28,8 +29,7 @@ export const Tooltip: Component<TooltipProps> = (props) => {
     style: 'dark',
     theme: {},
     trigger: 'hover'
-  }, p);
-  const [local, props] = splitProps(props, ['animation', 'arrow', 'children', 'className', 'content', 'placement', 'style', 'theme', 'trigger']);
+  }, local);
   const theme = mergeDeep(getTheme().tooltip, mergedProps.theme);
 
 
@@ -43,7 +43,7 @@ export const Tooltip: Component<TooltipProps> = (props) => {
       theme={theme}
       trigger={trigger}
       class={className}
-      {...props}
+      {...p}
     >
       {children}
     </Floating>
