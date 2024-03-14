@@ -1,4 +1,4 @@
-import type { ComponentProps, FC } from 'react';
+import { Show } from 'solid-js';
 import { twMerge } from 'tailwind-merge';
 import { mergeDeep } from '../../helpers/merge-deep';
 import { getTheme } from '../../theme-store';
@@ -28,7 +28,7 @@ export interface BadgeSizes extends Pick<FlowbiteSizes, 'xs' | 'sm'> {
 export interface BadgeProps extends Omit<ComponentProps<'span'>, 'color'> {
   color?: keyof FlowbiteColors;
   href?: string;
-  icon?: FC<ComponentProps<'svg'>>;
+  icon?: (props: ComponentProps<'svg'>) => JSX.Element;
   size?: keyof BadgeSizes;
   theme?: DeepPartial<FlowbiteBadgeTheme>;
 }
@@ -47,7 +47,7 @@ export const Badge: FC<BadgeProps> = ({
   const [local, others] = splitProps(merged, ['class', 'color', 'size', 'theme']);
   const theme = mergeDeep(getTheme().badge, local.theme);
 
-  const Content: FC = () => (
+  const Content = (): JSX.Element => (
     <span
       class={twMerge(
         theme.root.base,
