@@ -1,9 +1,12 @@
-import { defineConfig } from "vite";
-import solidPlugin from "vite-plugin-solid";
 import path from "path";
+import { defineConfig } from "vitest/config";
+import solid from "vite-plugin-solid";
 
 export default defineConfig({
-  plugins: [solidPlugin()],
+  plugins: [solid()],
+  resolve: {
+    conditions: ["development", "browser"],
+  },
   build: {
     lib: {
       entry: path.resolve(__dirname, "/src/index.ts"),
