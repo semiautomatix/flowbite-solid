@@ -20,7 +20,7 @@ export interface TooltipProps extends Omit<ComponentProps<'div'>, 'content' | 's
 /**
  * @see https://floating-ui.com/docs/react-dom-interactions
  */
-export const Tooltip: Component<TooltipProps> = (props) => {
+export const Tooltip: Component<TooltipProps> = (p: TooltipProps) => {
   const mergedProps = mergeProps({
     animation: 'duration-300',
     arrow: true,
