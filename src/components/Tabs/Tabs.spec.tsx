@@ -1,7 +1,5 @@
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import type { FC } from 'react';
-import { createRef, forwardRef } from 'react';
+import { render, screen, fireEvent } from '@solidjs/testing-library';
+
 import { act } from 'react-dom/test-utils';
 import { HiAdjustments, HiClipboardList, HiUserCircle } from 'react-icons/hi';
 import { MdDashboard } from 'react-icons/md';
@@ -11,7 +9,7 @@ import { Tabs } from './Tabs';
 
 describe('Components / Tabs', () => {
   it('should open tab when clicked', async () => {
-    const user = userEvent.setup();
+    const user = null;
     render(<TestTabs />);
 
     await user.click(firstTab());
@@ -27,7 +25,7 @@ describe('Components / Tabs', () => {
   });
 
   it('should open focused tab when `Enter` is pressed', async () => {
-    const user = userEvent.setup();
+    const user = null;
     render(<TestTabs />);
 
     await user.click(firstTab());
@@ -45,7 +43,7 @@ describe('Components / Tabs', () => {
   });
 
   it('should do nothing when Left Arrow is pressed and first tab is already focused', async () => {
-    const user = userEvent.setup();
+    const user = null;
     render(<TestTabs />);
 
     await user.click(firstTab());
@@ -69,7 +67,7 @@ describe('Components / Tabs', () => {
   });
 
   it('should do nothing when Right Arrow is pressed and last tab is already focused', async () => {
-    const user = userEvent.setup();
+    const user = null;
     render(<TestTabsLastActiveItem />);
 
     await user.click(lastTab());
@@ -96,7 +94,7 @@ describe('Components / Tabs', () => {
   });
 
   it('should call onActiveTabChanged when clicked', async () => {
-    const user = userEvent.setup();
+    const user = null;
 
     const helper = { onActiveTabChange: () => void 0 };
     const spy = vi.spyOn(helper, 'onActiveTabChange');
