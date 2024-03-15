@@ -30,6 +30,7 @@ import type { FlowbitePaginationTheme } from "../Pagination";
 // import type { FlowbiteSidebarTheme } from '../Sidebar';
 import type { FlowbiteSpinnerTheme } from "../Spinner";
 import type { FlowbiteTableTheme } from "../Table";
+import type { FlowbiteTextareaTheme } from '../Textarea';
 // import type { FlowbiteTabsTheme } from '../Tabs';
 import type { FlowbiteTextInputTheme } from "../TextInput";
 // import type { FlowbiteTextareaTheme } from '../Textarea';
@@ -76,6 +77,7 @@ export interface FlowbiteTheme {
   // rangeSlider: FlowbiteRangeSliderTheme;
   // select: FlowbiteSelectTheme;
   textInput: FlowbiteTextInputTheme;
+  textarea: FlowbiteTextareaTheme;  // Add theme for textarea
   // textarea: FlowbiteTextareaTheme;
   // toggleSwitch: FlowbiteToggleSwitchTheme;
   helperText: FlowbiteHelperTextTheme;
