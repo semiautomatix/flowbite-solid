@@ -1,4 +1,4 @@
-import { Show } from 'solid-js';
+import { createEffect, createSignal, Show } from 'solid-js';
 import { twMerge } from 'tailwind-merge';
 import { mergeDeep } from '../../helpers/merge-deep';
 import { getTheme } from '../../theme-store';
@@ -43,7 +43,7 @@ export const Badge: FC<BadgeProps> = ({
   theme: customTheme = {},
   ...props
 }) => {
-  const merged = mergeProps({ color: 'info', size: 'xs', theme: {} }, props);
+  const [local, others] = splitProps(props, ['class', 'color', 'size', 'theme']);
   const [local, others] = splitProps(merged, ['class', 'color', 'size', 'theme']);
   const theme = mergeDeep(getTheme().badge, local.theme);
 
