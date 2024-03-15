@@ -1,5 +1,4 @@
-import type { ComponentProps, ReactNode } from 'react';
-import { forwardRef } from 'react';
+import { mergeProps, splitProps, Show } from 'solid-js';
 import { twMerge } from 'tailwind-merge';
 import { mergeDeep } from '../../helpers/merge-deep';
 import { getTheme } from '../../theme-store';
