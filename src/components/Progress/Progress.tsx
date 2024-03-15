@@ -1,5 +1,4 @@
-import type { ComponentProps, FC } from 'react';
-import { useId } from 'react';
+import { Component, ComponentProps, mergeProps, splitProps } from "solid-js";
 import { twMerge } from 'tailwind-merge';
 import { mergeDeep } from '../../helpers/merge-deep';
 import { getTheme } from '../../theme-store';
@@ -35,7 +34,7 @@ export interface ProgressProps extends ComponentProps<'div'> {
 }
 
 export const Progress: FC<ProgressProps> = ({
-  className,
+  class,
   color = 'blue',
   labelProgress = false,
   labelText = false,
@@ -55,7 +54,7 @@ export const Progress: FC<ProgressProps> = ({
       <div id={id} aria-label={textLabel} aria-valuenow={progress} role="progressbar" {...props}>
         {((textLabel && labelText && textLabelPosition === 'outside') ||
           (progress > 0 && labelProgress && progressLabelPosition === 'outside')) && (
-          <div className={theme.label} data-testid="flowbite-progress-outer-label-container">
+          <div class={theme.label} data-testid="flowbite-progress-outer-label-container">
             {textLabel && labelText && textLabelPosition === 'outside' && (
               <span data-testid="flowbite-progress-outer-text-label">{textLabel}</span>
             )}
@@ -66,7 +65,7 @@ export const Progress: FC<ProgressProps> = ({
         )}
 
         <div className={twMerge(theme.base, theme.size[size], className)}>
-          <div style={{ width: `${progress}%` }} className={twMerge(theme.bar, theme.color[color], theme.size[size])}>
+          <div style={{ width: `${progress}%` }} class={twMerge(theme.bar, theme.color[color], theme.size[size])}>
             {textLabel && labelText && textLabelPosition === 'inside' && (
               <span data-testid="flowbite-progress-inner-text-label">{textLabel}</span>
             )}
