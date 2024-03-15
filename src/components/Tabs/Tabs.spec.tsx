@@ -1,5 +1,4 @@
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen, fireEvent, userEvent } from '@solidjs/testing-library';
 import type { FC } from 'react';
 import { createRef, forwardRef } from 'react';
 import { act } from 'react-dom/test-utils';
@@ -12,7 +11,7 @@ import { Tabs } from './Tabs';
 describe('Components / Tabs', () => {
   it('should open tab when clicked', async () => {
     const user = userEvent.setup();
-    render(<TestTabs />);
+    render(() => <TestTabs />);
 
     await user.click(firstTab());
     expect(firstTab()).toHaveFocus();
@@ -28,7 +27,7 @@ describe('Components / Tabs', () => {
 
   it('should open focused tab when `Enter` is pressed', async () => {
     const user = userEvent.setup();
-    render(<TestTabs />);
+    render(() => <TestTabs />);
 
     await user.click(firstTab());
     expect(firstTab()).toHaveFocus();
@@ -46,7 +45,8 @@ describe('Components / Tabs', () => {
 
   it('should do nothing when Left Arrow is pressed and first tab is already focused', async () => {
     const user = userEvent.setup();
-    render(<TestTabs />);
+    render(() => <TestTabs />);
+    render(() => <TestTabsDifferentActiveItem />);
 
     await user.click(firstTab());
     expect(firstTab()).toHaveFocus();
@@ -70,7 +70,8 @@ describe('Components / Tabs', () => {
 
   it('should do nothing when Right Arrow is pressed and last tab is already focused', async () => {
     const user = userEvent.setup();
-    render(<TestTabsLastActiveItem />);
+    render(() => <TestTabsLastActiveItem />);
+    render(() => <TestTabs />);
 
     await user.click(lastTab());
 
@@ -101,7 +102,7 @@ describe('Components / Tabs', () => {
     const helper = { onActiveTabChange: () => void 0 };
     const spy = vi.spyOn(helper, 'onActiveTabChange');
 
-    render(<TestTabs onActiveTabChange={helper.onActiveTabChange} />);
+    render(() => <TestTabs onActiveTabChange={helper.onActiveTabChange} />);
 
     await user.click(firstTab());
     expect(firstTab()).toHaveFocus();
@@ -124,7 +125,7 @@ describe('Components / Tabs', () => {
     const helper = { onActiveTabChange: () => void 0 };
     const spy = vi.spyOn(helper, 'onActiveTabChange');
 
-    render(<TestTabs ref={ref} onActiveTabChange={helper.onActiveTabChange} />);
+    render(() => <TestTabs ref={ref} onActiveTabChange={helper.onActiveTabChange} />);
 
     expect(firstTab()).toHaveAttribute('aria-selected', 'true');
 
@@ -141,7 +142,7 @@ describe('Components / Tabs', () => {
   });
 
   it('should have no tab item rendered when condition is false', async () => {
-    render(<TestConditionalTabs condition={false} />);
+    render(() => <TestConditionalTabs condition={false} />);
     const tabsLength = tabs().length;
 
     expect(tabsLength).toBe(0);
