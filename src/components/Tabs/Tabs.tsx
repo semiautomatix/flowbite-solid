@@ -1,7 +1,7 @@
 'use client';
 
-import type { ComponentProps, ForwardedRef, KeyboardEvent, PropsWithChildren, ReactElement } from 'react';
-import { Children, forwardRef, useEffect, useId, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import type { ComponentProps, KeyboardEvent } from 'solid-js';
+import { createEffect, createSignal, For } from 'solid-js';
 import { twMerge } from 'tailwind-merge';
 import { mergeDeep } from '../../helpers/merge-deep';
 import { getTheme } from '../../theme-store';
@@ -81,13 +81,13 @@ const TabsComponent = forwardRef<TabsRef, TabsProps>(
       [children],
     );
     const tabRefs = useRef<HTMLButtonElement[]>([]);
-    const [activeTab, setActiveTab] = useState(
+    const [activeTab, setActiveTab] = createSignal(
       Math.max(
         0,
         tabs.findIndex((tab) => tab.active),
       ),
     );
-    const [focusedTab, setFocusedTab] = useState(-1);
+    const [focusedTab, setFocusedTab] = createSignal(-1);
 
     const setActiveTabWithCallback = (activeTab: number) => {
       setActiveTab(activeTab);
@@ -142,8 +142,7 @@ const TabsComponent = forwardRef<TabsRef, TabsProps>(
               className={twMerge(
                 theme.tablist.tabitem.base,
                 tabItemStyle.base,
-                index === activeTab && tabItemStyle.active.on,
-                index !== activeTab && !tab.disabled && tabItemStyle.active.off,
+                index === activeTab() ? tabItemStyle.active.on : !tab.disabled ? tabItemStyle.active.off : '',
               )}
               disabled={tab.disabled}
               id={`${id}-tab-${index}`}
@@ -154,8 +153,10 @@ const TabsComponent = forwardRef<TabsRef, TabsProps>(
               tabIndex={index === focusedTab ? 0 : -1}
               style={{ zIndex: index === focusedTab ? 2 : 1 }}
             >
-              {tab.icon && <tab.icon className={theme.tablist.tabitem.icon} />}
-              {tab.title}
+          <Show when={tab.icon}>
+            <tab.icon className={theme.tablist.tabitem.icon} />
+          </Show>
+          {tab.title}
             </button>
           ))}
         </div>
@@ -165,7 +166,7 @@ const TabsComponent = forwardRef<TabsRef, TabsProps>(
               key={index}
               aria-labelledby={`${id}-tab-${index}`}
               className={theme.tabpanel}
-              hidden={index !== activeTab}
+              hidden={() => index !== activeTab()}
               id={`${id}-tabpanel-${index}`}
               role="tabpanel"
               tabIndex={0}
