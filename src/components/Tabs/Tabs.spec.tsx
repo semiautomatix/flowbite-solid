@@ -1,5 +1,4 @@
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen, fireEvent } from '@solidjs/testing-library';
 import type { FC } from 'react';
 import { createRef, forwardRef } from 'react';
 import { act } from 'react-dom/test-utils';
@@ -11,7 +10,7 @@ import { Tabs } from './Tabs';
 
 describe('Components / Tabs', () => {
   it('should open tab when clicked', async () => {
-    const user = userEvent.setup();
+    const user = setupUserEvent();
     render(<TestTabs />);
 
     await user.click(firstTab());
@@ -27,7 +26,7 @@ describe('Components / Tabs', () => {
   });
 
   it('should open focused tab when `Enter` is pressed', async () => {
-    const user = userEvent.setup();
+    const user = setupUserEvent();
     render(<TestTabs />);
 
     await user.click(firstTab());
@@ -45,7 +44,7 @@ describe('Components / Tabs', () => {
   });
 
   it('should do nothing when Left Arrow is pressed and first tab is already focused', async () => {
-    const user = userEvent.setup();
+    const user = setupUserEvent();
     render(<TestTabs />);
 
     await user.click(firstTab());
@@ -57,7 +56,7 @@ describe('Components / Tabs', () => {
   });
 
   it('should focus previous tab when Left Arrow is pressed', async () => {
-    const user = userEvent.setup();
+    const user = setupUserEvent();
     render(<TestTabsDifferentActiveItem />);
 
     await user.click(firstTab());
@@ -69,7 +68,7 @@ describe('Components / Tabs', () => {
   });
 
   it('should do nothing when Right Arrow is pressed and last tab is already focused', async () => {
-    const user = userEvent.setup();
+    const user = setupUserEvent();
     render(<TestTabsLastActiveItem />);
 
     await user.click(lastTab());
@@ -83,7 +82,7 @@ describe('Components / Tabs', () => {
   });
 
   it('should focus next tab when Right Arrow is pressed', async () => {
-    const user = userEvent.setup();
+    const user = setupUserEvent();
     render(<TestTabs />);
 
     await user.click(firstTab());
@@ -96,7 +95,7 @@ describe('Components / Tabs', () => {
   });
 
   it('should call onActiveTabChanged when clicked', async () => {
-    const user = userEvent.setup();
+    const user = setupUserEvent();
 
     const helper = { onActiveTabChange: () => void 0 };
     const spy = vi.spyOn(helper, 'onActiveTabChange');
