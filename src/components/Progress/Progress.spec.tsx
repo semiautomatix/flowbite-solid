@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@solidjs/testing-library';
 import { describe, expect, it } from 'vitest';
 import { Progress } from './Progress';
 
@@ -23,22 +23,22 @@ describe.concurrent('Components / Progress', () => {
     });
 
     it('should only display labels if specified', () => {
-      render(<Progress progress={45} labelProgress={false} textLabel="Flowbite" labelText={true} />);
+      render(() => <Progress progress={45} labelProgress={false} textLabel="Flowbite" labelText={true} />);
 
       expect(progressBar()).not.toHaveTextContent('45');
       expect(progressBar()).toHaveTextContent('Flowbite');
     });
 
     it('should display test label inside, progress label outside', () => {
-      render(
+      render(() => (
         <Progress
           progress={45}
           labelProgress={true}
           progressLabelPosition="outside"
           textLabel="Flowbite"
           labelText={true}
-        />,
-      );
+        />
+      ));
 
       expect(outerLabelContainer()).toBeInTheDocument();
       expect(outerProgressLabel()).toHaveTextContent('45%');
@@ -46,15 +46,15 @@ describe.concurrent('Components / Progress', () => {
     });
 
     it('should display text label outside, progress label inside', () => {
-      render(
+      render(() => (
         <Progress
           progress={45}
           labelProgress={true}
           textLabel="Flowbite"
           labelText={true}
           textLabelPosition="outside"
-        />,
-      );
+        />
+      ));
 
       expect(outerLabelContainer()).toBeInTheDocument();
       expect(outerTextLabel()).toHaveTextContent('Flowbite');
