@@ -1,5 +1,4 @@
-import type { ComponentProps, ReactNode } from 'react';
-import { forwardRef } from 'react';
+import { Component, ComponentProps, mergeProps, splitProps } from "solid-js";
 import { twMerge } from 'tailwind-merge';
 import { mergeDeep } from '../../helpers/merge-deep';
 import { getTheme } from '../../theme-store';
@@ -32,7 +31,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       <>
         <textarea
           ref={ref}
-          className={twMerge(theme.base, theme.colors[color], theme.withShadow[shadow ? 'on' : 'off'], className)}
+          class={twMerge(theme.base, theme.colors[color], theme.withShadow[shadow ? 'on' : 'off'], className)}
           {...props}
         />
         {helperText && <HelperText color={color}>{helperText}</HelperText>}
