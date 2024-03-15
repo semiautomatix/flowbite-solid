@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '@solidjs/testing-library';
 import { HiCheck } from 'react-icons/hi';
 import { describe, expect, it } from 'vitest';
 import { Flowbite, type CustomFlowbiteTheme } from '../Flowbite';
@@ -7,11 +7,11 @@ import { Badge } from './Badge';
 describe('Components / Badge', () => {
   describe('Rendering', () => {
     it('should render an `<a>` given `href=".."`', () => {
-      render(
+      render(() => (
         <Badge href="/" icon={HiCheck}>
           A badge with a link
-        </Badge>,
-      );
+        </Badge>
+      ));
 
       expect(link()).toBeInTheDocument();
       expect(link()).toHaveAttribute('href', '/');
@@ -20,7 +20,7 @@ describe('Components / Badge', () => {
 
   describe('Classname', () => {
     it('should merge not overwrite', () => {
-      render(<Badge className="bg-red-500">A badge with custom background</Badge>);
+      render(() => <Badge class="bg-red-500">A badge with custom background</Badge>);
 
       expect(badge()).toHaveClass(
         'bg-red-500 text-cyan-800 dark:bg-cyan-200 dark:text-cyan-800 group-hover:bg-cyan-200 dark:group-hover:bg-cyan-300',
@@ -40,13 +40,13 @@ describe('Components / Badge', () => {
           },
         },
       };
-      render(
+      render(() => (
         <Flowbite theme={{ theme }}>
           <Badge color="primary" href="/" icon={HiCheck}>
             A badge
           </Badge>
-        </Flowbite>,
-      );
+        </Flowbite>
+      ));
 
       expect(badge()).toHaveClass(
         'bg-cyan-100 text-cyan-800 dark:bg-cyan-200 dark:text-cyan-800 group-hover:bg-cyan-200 dark:group-hover:bg-cyan-300',
@@ -70,12 +70,12 @@ describe('Components / Badge', () => {
           },
         },
       };
-      render(
+      render(() => (
         <Flowbite theme={{ theme }}>
           <Badge size="xxl">A badge</Badge>
           <Badge icon={HiCheck} size="xxl" />
-        </Flowbite>,
-      );
+        </Flowbite>
+      ));
 
       const badges = screen.getAllByTestId('flowbite-badge');
       const regularBadge = badges[0];

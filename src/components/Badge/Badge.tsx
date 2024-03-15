@@ -1,4 +1,4 @@
-import type { ComponentProps, FC } from 'react';
+import { Show } from 'solid-js';
 import { twMerge } from 'tailwind-merge';
 import { mergeDeep } from '../../helpers/merge-deep';
 import { getTheme } from '../../theme-store';
@@ -28,7 +28,7 @@ export interface BadgeSizes extends Pick<FlowbiteSizes, 'xs' | 'sm'> {
 export interface BadgeProps extends Omit<ComponentProps<'span'>, 'color'> {
   color?: keyof FlowbiteColors;
   href?: string;
-  icon?: FC<ComponentProps<'svg'>>;
+  icon?: (props: ComponentProps<'svg'>) => JSX.Element;
   size?: keyof BadgeSizes;
   theme?: DeepPartial<FlowbiteBadgeTheme>;
 }
@@ -39,36 +39,36 @@ export const Badge: FC<BadgeProps> = ({
   href,
   icon: Icon,
   size = 'xs',
-  className,
+  class,
   theme: customTheme = {},
   ...props
 }) => {
-  const theme = mergeDeep(getTheme().badge, customTheme);
+  const merged = mergeProps({ color: 'info', size: 'xs', theme: {} }, props);
+  const [local, others] = splitProps(merged, ['class', 'color', 'size', 'theme']);
+  const theme = mergeDeep(getTheme().badge, local.theme);
 
-  const Content: FC = () => (
+  const Content = (): JSX.Element => (
     <span
-      className={twMerge(
+      class={twMerge(
         theme.root.base,
-        theme.root.color[color],
-        theme.root.size[size],
+        theme.root.color[local.color],
+        theme.root.size[local.size],
         theme.icon[Icon ? 'on' : 'off'],
-        className,
+        local.class
       )}
       data-testid="flowbite-badge"
-      {...props}
+      {...others}
     >
-      {Icon && <Icon aria-hidden className={theme.icon.size[size]} data-testid="flowbite-badge-icon" />}
+      {Icon && <Icon aria-hidden class={theme.icon.size[local.size]} data-testid="flowbite-badge-icon" />}
       {children && <span>{children}</span>}
     </span>
   );
 
-  return href ? (
-    <a className={theme.root.href} href={href}>
-      <Content />
-    </a>
-  ) : (
-    <Content />
+  return (
+    <Show when={local.href} fallback={<Content />}>{() => (
+      <a class={theme.root.href} href={local.href}><Content /></a>
+    )}</Show>
   );
 };
 
-Badge.displayName = 'Badge';
+
