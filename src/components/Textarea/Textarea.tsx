@@ -1,5 +1,4 @@
-import type { ComponentProps, ReactNode } from 'react';
-import { forwardRef } from 'react';
+import { Component, ComponentProps, mergeProps, splitProps } from "solid-js";
 import { twMerge } from 'tailwind-merge';
 import { mergeDeep } from '../../helpers/merge-deep';
 import { getTheme } from '../../theme-store';
@@ -24,21 +23,20 @@ export interface TextareaProps extends Omit<ComponentProps<'textarea'>, 'color' 
   theme?: DeepPartial<FlowbiteTextareaTheme>;
 }
 
-export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ className, color = 'gray', helperText, shadow, theme: customTheme = {}, ...props }, ref) => {
-    const theme = mergeDeep(getTheme().textarea, customTheme);
+export const Textarea: Component<TextareaProps> = (props) => {
+  const mergedProps = mergeProps({ color: 'gray', helperText: '', shadow: false, theme: {} }, props);
+  const [local, others] = splitProps(mergedProps, ['color', 'helperText', 'shadow', 'theme']);
+  const theme = mergeDeep(getTheme().textarea, local.theme);
 
-    return (
-      <>
-        <textarea
-          ref={ref}
-          className={twMerge(theme.base, theme.colors[color], theme.withShadow[shadow ? 'on' : 'off'], className)}
-          {...props}
-        />
-        {helperText && <HelperText color={color}>{helperText}</HelperText>}
-      </>
-    );
-  },
-);
-
-Textarea.displayName = 'Textarea';
+  return (
+    <>
+      <textarea
+        class={twMerge(theme.base, theme.colors[local.color], theme.withShadow[local.shadow ? 'on' : 'off'], local.class)}
+        {...others}
+      />
+      <Show when={local.helperText}>
+        <HelperText color={local.color}>{local.helperText}</HelperText>
+      </Show>
+    </>
+  );
+};
