@@ -1,6 +1,6 @@
 'use client';
 
-import type { ComponentProps, FC } from 'react';
+import { Component, mergeProps, splitProps, Show } from "solid-js";
 import { HiMoon, HiSun } from 'react-icons/hi';
 import { twMerge } from 'tailwind-merge';
 import { mergeDeep } from '../../helpers/merge-deep';
@@ -24,7 +24,7 @@ export interface DarkThemeToggleProps extends ComponentProps<'button'> {
 }
 
 export const DarkThemeToggle: FC<DarkThemeToggleProps> = ({
-  className,
+  class: className,
   theme: customTheme = {},
   iconDark: IconDark = HiSun,
   iconLight: IconLight = HiMoon,
