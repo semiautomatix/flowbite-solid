@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '@solidjs/testing-library';
 import { describe, expect, it } from 'vitest';
 import { Flowbite, type CustomFlowbiteTheme } from '../Flowbite';
 import { Radio } from './Radio';
@@ -6,7 +6,8 @@ import { Radio } from './Radio';
 describe.concurrent('Components / Radio', () => {
   describe.concurrent('A11y', () => {
     it('should have role="radio" by default', () => {
-      const radio = render(<Radio />).getByRole('radio');
+      const { getByRole } = render(() => <Radio />);
+      const radio = getByRole('radio');
 
       expect(radio).toBeInTheDocument();
     });
@@ -21,11 +22,10 @@ describe.concurrent('Components / Radio', () => {
           },
         },
       };
-      render(
-        <Flowbite theme={{ theme }}>
-          <Radio />
-        </Flowbite>,
-      );
+      const { container } = render(() => <Flowbite theme={{ theme }}>
+        <Radio />
+      </Flowbite>);
+      const radio = () => container.querySelector('input[type="radio"]');
 
       expect(radio()).toHaveClass('bg-yellow-400 dark:bg-yellow-40');
     });
