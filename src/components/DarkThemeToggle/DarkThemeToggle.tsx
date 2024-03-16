@@ -24,12 +24,10 @@ export interface DarkThemeToggleProps extends ComponentProps<'button'> {
 }
 
 export const DarkThemeToggle: FC<DarkThemeToggleProps> = ({
-  class: className,
-  theme: customTheme = {},
-  iconDark: IconDark = HiSun,
-  iconLight: IconLight = HiMoon,
-  ...props
 }) => {
+  const props = mergeProps({ class: '', theme: {}, iconDark: HiSun, iconLight: HiMoon }, props);
+  const [local, others] = splitProps(props, ['class', 'theme', 'iconDark', 'iconLight']);
+  const { class: className, theme: customTheme, iconDark: IconDark, iconLight: IconLight } = local;
   const { computedMode, toggleMode } = useThemeMode();
 
   const theme = mergeDeep(getTheme().darkThemeToggle, customTheme);
@@ -39,19 +37,19 @@ export const DarkThemeToggle: FC<DarkThemeToggleProps> = ({
       type="button"
       aria-label="Toggle dark mode"
       data-testid="dark-theme-toggle"
-      className={twMerge(theme.root.base, className)}
+      class={twMerge(theme.root.base, className)}
       onClick={toggleMode}
-      {...props}
+      {...others}
     >
       <IconDark
         aria-label="Currently dark mode"
         data-active={computedMode === 'dark'}
-        className={twMerge(theme.root.icon, 'hidden dark:block')}
+        class={twMerge(theme.root.icon, 'hidden dark:block')}
       />
       <IconLight
         aria-label="Currently light mode"
         data-active={computedMode === 'light'}
-        className={twMerge(theme.root.icon, 'dark:hidden')}
+        class={twMerge(theme.root.icon, 'dark:hidden')}
       />
     </button>
   );
